@@ -188,5 +188,6 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
 
     charger = Evc04Charger("192.168.178.96")
+    charger.connect()
     logging.info(charger.getSystemInfo())
     charger.readRelevantData()

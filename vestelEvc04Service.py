@@ -18,7 +18,7 @@ import sys
 import os
 import pymodbus
 import configparser # for config/ini file
-from  vestelEvcModbus import Evc04Charger
+from  vestelEvc04Modbus import Evc04Charger
 
 # our own packages from victron
 sys.path.insert(1, os.path.join(os.path.dirname(__file__), '/opt/victronenergy/dbus-systemcalc-py/ext/velib_python'))
@@ -103,7 +103,7 @@ class VestelEvc04Service(object):
     def _getConfig(self):
         config = configparser.ConfigParser()
         config.read("%s/config.ini" % (os.path.dirname(os.path.realpath(__file__))))
-        return config;
+        return config
 
 # === All code below is to simply run it from the commandline for debugging purposes ===
 
@@ -118,7 +118,7 @@ class VestelEvc04Service(object):
 # See their manual to explain the % in %20
 
 def main():
-      #configure logging
+    #configure logging
     logging.basicConfig(      format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                                 datefmt='%Y-%m-%d %H:%M:%S',
                                 level=logging.INFO,
@@ -126,7 +126,8 @@ def main():
                                     logging.FileHandler("%s/current.log" % (os.path.dirname(os.path.realpath(__file__)))),
                                     logging.StreamHandler()
                                 ])
-
+    logging.basicConfig(level=logging.INFO)
+    logging.info('Connected to dbus, and switching over to GLib.MainLoop() (= event based)')
 
     from dbus.mainloop.glib import DBusGMainLoop
     # Have a mainloop, so we can send/receive asynchronous calls to and from dbus
