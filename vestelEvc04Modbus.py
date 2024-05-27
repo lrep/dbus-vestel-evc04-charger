@@ -38,7 +38,10 @@ class Evc04Charger():
     def getSystemInfo(self):
         # self.connect()
         self.systemInfo = {}
-        self.systemInfo["serial"] = convertToString(self.client.read_input_registers(100, 25).registers)  
+
+        self.serial = convertToString(self.client.read_input_registers(100, 25).registers)
+        self.systemInfo["serial"] = self.serial
+
         self.systemInfo["chargepointId"] = convertToString(self.client.read_input_registers(130, 50).registers)
         self.systemInfo["brand"] = convertToString(self.client.read_input_registers(199, 10).registers)
         
@@ -158,6 +161,9 @@ class Evc04Charger():
     
     def getModel(self):
         return self.model
+    
+    def getSerial(self):
+        return self.serial
 
     def getVrmStatus(self):
         cableState = self.cableState
@@ -190,4 +196,6 @@ if __name__ == '__main__':
     charger = Evc04Charger("192.168.178.96")
     charger.connect()
     logging.info(charger.getSystemInfo())
+    logging.info(charger.getSerial())
+    print(charger.getSerial())
     charger.readRelevantData()

@@ -52,6 +52,7 @@ class VestelEvc04Service(object):
         self._dbusservice.add_path('/ProductName', productname)
         self._dbusservice.add_path('/FirmwareVersion', self.evc04Charger.getFirmwareversion())
         self._dbusservice.add_path('/Model', self.evc04Charger.getModel())
+        self._dbusservice.add_path('/Serial', self.evc04Charger.getSerial())
 
         for path, settings in self._paths.items():
             self._dbusservice.add_path(path, settings['initial'], writeable=False, onchangecallback=self._handlechangedvalue)
@@ -82,7 +83,7 @@ class VestelEvc04Service(object):
             self.update('/Ac/L2/Power', evc04Data['powerL2'])
             self.update('/Ac/L3/Power', evc04Data['powerL3'])
             self.update('/Status', self.evc04Charger.getVrmStatus())
-            self.update('/MaxCurrent', self.evc04Charger.maxCurrent)
+            self.update('/Current', self.evc04Charger.maxCurrent)
             self.update('/ChargingTime', evc04Data['sessionDuration'])
 
             self.evc04Charger.updateValues()
@@ -126,7 +127,6 @@ def main():
                                     logging.FileHandler("%s/current.log" % (os.path.dirname(os.path.realpath(__file__)))),
                                     logging.StreamHandler()
                                 ])
-    logging.basicConfig(level=logging.INFO)
     logging.info('Connected to dbus, and switching over to GLib.MainLoop() (= event based)')
 
     from dbus.mainloop.glib import DBusGMainLoop
