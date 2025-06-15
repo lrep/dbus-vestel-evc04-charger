@@ -25,11 +25,4 @@ then
     echo >> $filename
 fi
 
-rm -r /data/dbus-vestel-evc04-charger/pymodbus
-wget https://github.com/pymodbus-dev/pymodbus/archive/refs/tags/v3.6.8.zip 
-unzip v3.6.8.zip "pymodbus*/pymodbus/*"
-rm v3.6.8.zip
-mv -f pymodbus-3.6.8/pymodbus /data/dbus-vestel-evc04-charger
-rm pymodbus-3.6.8 -r
-
 grep -qxF "$SCRIPT_DIR/install.sh" $filename || echo "$SCRIPT_DIR/install.sh" >> $filename

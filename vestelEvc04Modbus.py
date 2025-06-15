@@ -1,4 +1,6 @@
-from pymodbus.client import ModbusTcpClient
+#!/usr/bin/env python
+
+from pymodbus.client import ModbusTcpClient as ModbusClient
 
 import logging
 import sys
@@ -25,7 +27,7 @@ class Evc04Charger():
 
     def connect(self):
         if(self.client == None):
-            self.client = ModbusTcpClient(host=self.host, port=502, unit_id=255)
+            self.client = ModbusClient(host=self.host, port=502, unit_id=255)
             
         time.sleep(0.01)
         # if not self.client.connected():
